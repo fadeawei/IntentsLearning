@@ -10,6 +10,7 @@ import android.widget.EditText;
 public class SendMessageActivity extends AppCompatActivity {
     private EditText editTextMessage;
     private Button sendMessage;
+    private Button shareButton;
     public static final String XTRA_SEND_MESSAGE = "the message";
 
     @Override
@@ -33,10 +34,22 @@ public class SendMessageActivity extends AppCompatActivity {
                 startActivity(intentSendMessage);
             }
         });
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // make an intent with the desired action
+                Intent intentShare = new Intent(Intent.ACTION_SEND);
+                // set the datatype
+                intentShare.setType("text/plain");
+                intentShare.putExtra(XTRA_SEND_MESSAGE, editTextMessage.getText().toString());
+                startActivity(intentShare);
+            }
+        });
     }
 
     private void wireWidgets() {
         editTextMessage = findViewById(R.id.edittext_sendmessage_msg);
+        shareButton = findViewById(R.id.button_sendmessage_share);
         sendMessage = findViewById(R.id.button_sendmessage_send);
     }
 }
